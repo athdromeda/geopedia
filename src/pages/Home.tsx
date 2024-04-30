@@ -6,6 +6,7 @@ import CountryCard from "../components/CountryCard";
 import Hero from "../components/Hero";
 import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
+import Footer from "./Footer";
 
 export const COUNTRIES = gql`
   {
@@ -22,37 +23,44 @@ export const COUNTRIES = gql`
 function Home() {
   const { loading, error, data } = useQuery(COUNTRIES);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredResult, setFilteredResult] = useState(data.countries);
+  const [filteredResult, setFilteredResult] = useState([]);
   const [pageIndex, setPageIndex] = useState(0);
+  console.log(loading, error, data);
+  console.log("filteredResult", filteredResult);
 
   useEffect(() => {
-    setFilteredResult(
-      data.countries.filter((country: CountryCardProps) =>
-        country.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
-  }, [searchQuery]);
+    data &&
+      data.countries &&
+      setFilteredResult(
+        data.countries.filter((country: CountryCardProps) =>
+          country.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+  }, [searchQuery, loading]);
 
   return (
-    <main className="flex flex-col items-center w-full max-w-screen-xl px-12 m-auto md:p-12 py-14 text-slate-800">
-      <Hero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      {loading && <Loading />}
-      {error && <Error />}
-      <div className="grid w-full grid-cols-1 gap-4 lg:gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {data &&
-          filteredResult
-            .slice(pageIndex * 6, pageIndex * 6 + 6)
-            .map((country: CountryCardProps) => (
-              <CountryCard country={country} />
-            ))}
-      </div>
-      {!filteredResult[0] && <p>No match result.</p>}
-      <Pagination
-        pageIndex={pageIndex}
-        setPageIndex={setPageIndex}
-        lastPageIndex={Math.floor(filteredResult.length / 6)}
-      />
-    </main>
+    <>
+      <main className="flex flex-col items-center w-full max-w-screen-xl px-12 m-auto md:p-12 py-14 text-slate-800">
+        <Hero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        {loading && <Loading />}
+        {error && <Error />}
+        <div className="grid w-full grid-cols-1 gap-4 lg:gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {data &&
+            filteredResult
+              .slice(pageIndex * 6, pageIndex * 6 + 6)
+              .map((country: CountryCardProps) => (
+                <CountryCard country={country} key={country.code} />
+              ))}
+        </div>
+        {filteredResult && !filteredResult[0] && <p>No match result.</p>}
+        <Pagination
+          pageIndex={pageIndex}
+          setPageIndex={setPageIndex}
+          lastPageIndex={Math.floor(filteredResult.length / 6)}
+        />
+      </main>
+      <Footer />
+    </>
   );
 }
 
