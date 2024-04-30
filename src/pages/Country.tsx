@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import MoreCountries from "../components/MoreCountries";
+import Footer from "./Footer";
 
 const Country = () => {
   const navigate = useNavigate();
@@ -80,6 +81,7 @@ const Country = () => {
         <div className="w-full m-auto my-12 border-b border-slate-400 md:w-1/2"></div>
         <MoreCountries />
       </main>
+      <Footer />
     </>
   );
 };

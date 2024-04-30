@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 const Hero = ({
   searchQuery,
@@ -7,8 +7,6 @@ const Hero = ({
   searchQuery: string;
   setSearchQuery: Dispatch<SetStateAction<string>>;
 }) => {
-  // const [query, setQuery] = useState("");
-
   return (
     <div className="relative items-center w-full gap-4 mb-8 h-fit max-h-80">
       <div className="min-h-60">
