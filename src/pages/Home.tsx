@@ -25,8 +25,6 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResult, setFilteredResult] = useState([]);
   const [pageIndex, setPageIndex] = useState(0);
-  console.log(loading, error, data);
-  console.log("filteredResult", filteredResult);
 
   useEffect(() => {
     data &&
@@ -37,6 +35,10 @@ function Home() {
         )
       );
   }, [searchQuery, loading]);
+
+  useEffect(() => {
+    setPageIndex(0);
+  }, [searchQuery]);
 
   return (
     <>
