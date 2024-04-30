@@ -18,7 +18,7 @@ const CountryCard = ({ country }: { country: CountryCardProps }) => {
           className="hidden group-hover:block size-5"
         />
       </div>
-      <div className="flex justify-between w-full mt-2 text-slate-500 group-hover:text-white">
+      <div className="flex justify-between w-full mt-2 text-sm md:text-base text-slate-500 group-hover:text-white">
         <h2>Capital: {country.capital}</h2>
         <h2>Currency: {country.currencies[0]}</h2>
       </div>

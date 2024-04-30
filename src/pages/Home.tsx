@@ -4,7 +4,7 @@ import Error from "../components/Error";
 import CountryCardProps from "../types/CountryCard";
 import CountryCard from "../components/CountryCard";
 
-const COUNTRIES = gql`
+export const COUNTRIES = gql`
   {
     countries {
       code
