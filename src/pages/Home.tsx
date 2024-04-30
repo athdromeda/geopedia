@@ -5,6 +5,7 @@ import CountryCardProps from "../types/CountryCard";
 import CountryCard from "../components/CountryCard";
 import Hero from "../components/Hero";
 import { useEffect, useState } from "react";
+import Pagination from "./Pagination";
 
 export const COUNTRIES = gql`
   {
@@ -22,6 +23,7 @@ function Home() {
   const { loading, error, data } = useQuery(COUNTRIES);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResult, setFilteredResult] = useState(data.countries);
+  const [pageIndex, setPageIndex] = useState(0);
 
   useEffect(() => {
     setFilteredResult(
@@ -38,11 +40,18 @@ function Home() {
       {error && <Error />}
       <div className="grid w-full grid-cols-1 gap-4 lg:gap-5 md:grid-cols-2 lg:grid-cols-3">
         {data &&
-          filteredResult.map((country: CountryCardProps) => (
-            <CountryCard country={country} />
-          ))}
+          filteredResult
+            .slice(pageIndex * 6, pageIndex * 6 + 6)
+            .map((country: CountryCardProps) => (
+              <CountryCard country={country} />
+            ))}
       </div>
       {!filteredResult[0] && <p>No match result.</p>}
+      <Pagination
+        pageIndex={pageIndex}
+        setPageIndex={setPageIndex}
+        lastPageIndex={Math.floor(filteredResult.length / 6)}
+      />
     </main>
   );
 }
