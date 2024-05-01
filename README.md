@@ -18,6 +18,10 @@ Explore countries in the world with [GeoPedia](https://geo.nqth.live/)!
 
 `npm run dev`
 
+- Running test
+
+`npm run test`
+
 ## 💡 Features
 
 - 🔍 Search country based on its name
